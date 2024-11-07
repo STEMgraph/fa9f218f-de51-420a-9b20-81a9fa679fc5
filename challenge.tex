@@ -11,7 +11,7 @@
     You should remember, that there are no such things as directories or folders on your actual harddrive.
     These are just inventions by the filesystem. 
     We commonly use pre- and suffixes to tag different files on our computer. 
-    While wie use suffixes to indicate the functional content of a file, such as \texttt{pdf}, \texttt{docx}, \texttt{jpg}, we use prefixes to indicate the context of the file, such as \texttt{Documents}, \texttt{Downloads} and so on.
+    While we use suffixes to indicate the functional content of a file, such as \texttt{pdf}, \texttt{docx}, \texttt{jpg}, we use prefixes to indicate the context of the file, such as \texttt{Documents}, \texttt{Downloads} and so on.
     Hence a directory is just a collection of files with the same prefix.
     Coming back to the idea of making commonly used commands as short as possible, we are going to focus on the \texttt{cd} command.
     Modern shells, or terminal interpreters, help us handling long filenames with a lot of prefixes by giving us the impression, that there are no other files on our filesystem, but only files with the same prefix.
@@ -46,8 +46,42 @@
     The \texttt{~} symbol is a special symbol in the promt, that indicates your home directory.
     This symbol is the same for all users. 
     But of course it does not refer to the same directory for every user, but to their very own home directory.
-    Your own home directory of course has a regular name, such as \texttt{/home/user}.
-    This is why the output of \texttt{pwd} is \texttt{/home/user} and not \texttt{~}.
+    Your own home directory of course has a regular name, such as \texttt{/home/<username>}.
+    This is why the output of \texttt{pwd} is \texttt{/home/<username>} and not \texttt{~}.
+    \end{task}
+
+    \begin{task}
+        We will now use the \texttt{ls} command to list all files in our present working directory.
+        \begin{questions}
+            \item Type \texttt{ls} and press \texttt{Enter}. What is the output?
+        \end{questions}
+    \end{task}
+
+    \begin{task}
+        As you may have noticed, the output might be empty.
+        Especially if this is the first time you work with your filesystem.
+        Therefor we will now see what's inside of some other directories. 
+        \begin{questions}
+            \item Let's research the content of the root-directory. Type \texttt{ls /} and press \texttt{Enter}. What is the output?
+            \item Let's also see what's inside of the \texttt{home} directory. Type \texttt{ls /home} and press \texttt{Enter}. What is the output?
+        \end{questions}
+        In the first case, you will see the most basic directory of your filesystem.
+        All of the other directories will be inside of this one.
+        In the second case, you will see the directories of the home directory.
+        All users have their own home directory, which are usually located in the \texttt{/home} directory.
+    \end{task}
+
+    \begin{task}
+        We may also use additional options for the \texttt{ls} command.
+        Let's try some useful ones and you try to explain what these options change in the output!
+        \begin{questions}
+            \item Type \texttt{ls -l} and press \texttt{Enter}. What is the output?
+            \item Type \texttt{ls -lS} and press \texttt{Enter}. What is the output?
+            \item Type \texttt{ls -lh} and press \texttt{Enter}. What is the output?
+            \item Type \texttt{ls -la} and press \texttt{Enter}. What is the output?
+            \item Type \texttt{ls -l /} and press \texttt{Enter}. What is the output?
+            \item Type \texttt{ls -l /home} and press \texttt{Enter}. What is the output?
+        \end{questions}
     \end{task}
 
     \begin{task}
@@ -55,33 +89,26 @@
     The command for this action, which indicates to the shell, that we want to change the current directory, is the \texttt{cd} command.
     In the most usual case it takes one argument, which is the name of the new directory.
         \begin{questions}
-            \item Which command can you use to start \texttt{xeyes}?
-            \item Explain in your own words, what happens when a user-program wants to display something using the X11 protocol!
+            \item First type the command \texttt{pwd} and remember the output. 
+            \item Now type \texttt{cd /} and press \texttt{Enter}. Now run \texttt{ls -l}. What is the output?
+            \item Run \texttt{cd <the path you saved two steps earlier>} and press \texttt{Enter}. Run \texttt{pwd} again. Where did you end up?
+            \item Go back to the -so called- root-directory, or \texttt{/}. Run \texttt{ls -l} again. Choose one of the directories in your filesystem and type \texttt{cd <directory>}. Now run \texttt{ls -l}. What is the output?
         \end{questions}
-    If this didn't work as expected for you, go back to the \href{https://www.github.com/STEMgraph/}{first X-Server Challenge}.
     \end{task}
+
     \begin{task}
-    Use your preferred package manager to install the \texttt{xpdf} package. If you want to build xpdf from source, follow the Link to the \href{https://gitlab.com/xpdf-mirror/xpdf}{xpdf} repository.
+    While we are navigating the file system, we sometimes just want to go back to specific directories.
+    There are three very special commands, that can be used to do this.
         \begin{questions}
-            \item Which command can you use to install the \texttt{xpdf} package?
-            \item In which programming language was xpdf written?
-            \item Can you figure out, which GUI Library xpdf uses?
-            \item Run \texttt{xpdf --version}, what is the output?
+            \item Type \texttt{cd}, so without any parameter and press \texttt{Enter}. Run \texttt{pwd}, where did you go?
+            \item No type \texttt{cd -}, run \texttt{pwd} again, where did you go now?
+            \item Run \texttt{cd ..}, run \texttt{pwd} again, what does this command do?
         \end{questions}
     \end{task}
-    \begin{task}
-    \texttt{xpdf} can display PDF files. Run \texttt{xpdf <filename>} to display the PDF file \textit{<filename>}. If you don't have a PDF file, you can download a simple one from \href{https://constitutioncenter.org/media/files/constitution.pdf}{https://constitutioncenter.org/media/files/constitution.pdf}. To download a file into your \texttt{\textasciitilde} directory, use \texttt{wget <URL>}.
-        \begin{questions}
-            \item Run the command \texttt{xpdf -z 8}, what is the output?
-            \item Run the command \texttt{xpdf -z 50}; then run the command \texttt{xpdf -z 150}, what is the output?
-            \item Run the command \texttt{xpdf -rv}, what is the output?
-        \end{questions}
-    \end{task}
-    \begin{task}
-    While installing xpdf, you also installed the \texttt{poppler-utils} package. Part of this package is the \texttt{pdftotext} command.
-        \begin{questions}
-            \item What does the command \texttt{pdftotext <filename>} do?
-        \end{questions}
-    \end{task}
+    \begin{advise}
+        If you get tired of typing the complete path when changing a directory, try tapping the \texttt{tab} key.
+        It will autocomplete the path for you if possible.
+        Are multiple options available and \texttt{tab} can't complete, tap the \texttt{tab} key again for a list of all possibilities!
+    \end{advise}
 \end{challenge}
     
