@@ -2,19 +2,21 @@
 \begin{challenge}
     \chatitle{Using the terminal-emulator to navigate the linux filesystem}
     \begin{chadescription}
-    As you should know by now, we have to differentiate between `memory` and `storage`.
-    If you are not sure about the differences, please go back to the \href{https://www.github.com/STEMgraph/}{first Filesystem Challenge}.
     We interface with our filesystem, using the operating systems kernel. 
-    It talks to the filesystem driver and the hardware drivers, to perform operations on the filesystem.
-    The major operation we will be working with here is the \texttt{cd} command.
-    A general rule of thumb in user-interface design is to make commonly used commands as short as possible.
-    In the first Filesystem Challenge you already learned about filenames and their connection to the harddrive. 
-    You should remember, that there are no such things as directories or folders on your actual harddrive.
+    It talks to the filesystem driver and can store and retrieve data from locations, that are identified by filenames.
+    Filenames identify a specific location on the hardware, that would be hard to address otherwise.
+    When the operating system wants to retrieve data, it needs to know the hardware-coordinates within the computer's memory or storage.
+    The filesystem is the place where the connection between name and physical address is stored. 
+    Much like a phonebook, it maps names to physical addresses.\\
+    If you have worked with computers before, you probably have heard about directories.
+    I am sorry to tell you at this point, that directories are a lie. 
+    They are just very long filenames, that are used to identify a collection of files.
+    You should always remember, that there are no such things as directories or folders on your actual harddrive.
     These are just inventions by the filesystem. 
     We commonly use pre- and suffixes to tag different files on our computer. 
     While we use suffixes to indicate the functional content of a file, such as \texttt{pdf}, \texttt{docx}, \texttt{jpg}, we use prefixes to indicate the context of the file, such as \texttt{Documents}, \texttt{Downloads} and so on.
-    Hence a directory is just a collection of files with the same prefix.
-    Coming back to the idea of making commonly used commands as short as possible, we are going to focus on the \texttt{cd} command.
+    Hence what we think of as a directory is just a collection of files with the same prefix, that get presented to us in a certain way.
+    Since we want to make commonly used commands as short as possible, we are going to focus on the \textit{change-directory}-command, or \texttt{cd}.
     Modern shells, or terminal interpreters, help us handling long filenames with a lot of prefixes by giving us the impression, that there are no other files on our filesystem, but only files with the same prefix.
     This is the actual meaning of being in a directory.
     It makes all files with the same prefix easier to use. 
@@ -22,12 +24,11 @@
     \begin{center}
     \texttt{user@host:/home/user\$}
     \end{center}
-    The \texttt{user} is the username, \texttt{host} is the hostname, and \texttt{/home/user/} is the current directory.
+    The \texttt{user} is the username, \texttt{host} is the computers given-name, and \texttt{/home/user/} is the current directory.
     Seeing the current directory in the promt is really helpful. 
     It makes it easy to remember where you are.
     But it also indicates, that whatever filename you are now using as an input to a command, will get appended to the current directory.
     In this challenge we will: 
-    
     
     \begin{enumerate}
         \item use the \texttt{cd} command to navigate your filesystem
@@ -38,29 +39,41 @@
 
     \begin{task}
     Open your terminal-emulator on your linux system.
-        \begin{questions}
-            \item Type \texttt{pwd} and press \texttt{Enter}. What is the output?
-        \end{questions}
-    You will most likely see, that the output is not what your promt shows you. 
+    Type the command \texttt{pwd} and press \texttt{Enter}.
+    The output of the command will be printed to your terminal.
+    \texttt{pwd} is short for \texttt{print working directory}.
+    Working directory only means, that the shell will prepend the current directory to the input of any command - except for a some special cases we are about to explore.
+    You will most likely see, that the output is not what your prompt shows you. 
     It's unfortunate, that we are starting with a special case here.
-    When you fire up your terminal, the present working directory is set to your home directory.
-    The \texttt{~} symbol is a special symbol in the promt, that indicates your home directory.
+    When you fire up your terminal, the present working directory is usually set to your \textit{home directory}.
+    The \texttt{~} symbol is a special symbol in the prompt, that indicates your home directory.
     This symbol is the same for all users. 
     But of course it does not refer to the same directory for every user, but to their very own home directory.
     Your own home directory of course has a regular name, such as \texttt{/home/<username>}.
     This is why the output of \texttt{pwd} is \texttt{/home/<username>} and not \texttt{~}.
+    \begin{questions}
+        \item What is the difference between a files prefix and a files suffix? What does the command \texttt{pwd} have to do with that?
+    \end{questions}
     \end{task}
+    \begin{advice}
+        Linguistically, "to prompt" means to incite, suggest, or encourage someone to do something, which is precisely what the CLI prompt does — it signals that the system is ready and waiting for your next instruction.
+    \end{advice}
 
     \begin{task}
-        We will now use the \texttt{ls} command to list all files in our present working directory.
+        Generate a new file in your home directory by running \texttt{touch <filename>} and press \texttt{Enter}.
+        Touch is short for \texttt{touch file}. 
+        It's original meaning is to update the timestamp of a files latest modification.
+        If you \texttt{touch} with a filename that doesn't exist yet, it will be created without any contents.
+        Use the \texttt{ls} command to list all files in our present working directory.
+        Take one of the filenames and type \texttt{realpath <filename>} and press \texttt{Enter}.
         \begin{questions}
-            \item Type \texttt{ls} and press \texttt{Enter}. What is the output?
+            \item Why does it show a different name, than just the \texttt{filename.suffix}?
         \end{questions}
     \end{task}
 
     \begin{task}
-        As you may have noticed, the output might be empty.
-        Especially if this is the first time you work with your filesystem.
+        We have now seen all the files, that share our present working directory as a prefix.
+        Especially if this is the first time you work with your filesystem, your home-directory might be nealy empty.
         Therefor we will now see what's inside of some other directories. 
         \begin{questions}
             \item Let's research the content of the root-directory. Type \texttt{ls /} and press \texttt{Enter}. What is the output?
@@ -68,6 +81,9 @@
         \end{questions}
         In the first case, you will see the most basic directory of your filesystem.
         All of the other directories will be inside of this one.
+        If you address any file in your filesystem with a prepended \texttt{/}, the path that you are providing will not be relative to your present working directory. 
+        It will be relative to the root directory - also called absolute path.
+        Remember: If you give your command-line-interpreter a filepath, it will search for the file in your present working directory, if you prepend a \texttt{/}, it will search in the root directory.
         In the second case, you will see the directories of the home directory.
         All users have their own home directory, which are usually located in the \texttt{/home} directory.
     \end{task}
